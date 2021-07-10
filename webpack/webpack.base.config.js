@@ -24,6 +24,10 @@ module.exports = () => {
                             'css-loader',
                         ],
                     },
+                    {
+                        test: /\.(png|jpg|jpeg|gif|ico|svg)$/,
+                        use: ['file-loader'],
+                    },
                 ],
             },
             plugins: [
