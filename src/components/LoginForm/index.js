@@ -133,6 +133,7 @@ const LoginForm = () => {
                         error={!!error}
                         onChange={(e) => setPassword(e.target.value)}
                         id="password"
+                        type="password"
                     />
                 </FormControl>
                 <Actions>
