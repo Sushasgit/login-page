@@ -89,7 +89,6 @@ const LoginForm = () => {
         axios
             .post('https://api.ozonin-staging.com/api/v1/users/login', data)
             .then((response) => {
-                console.log('Status: ', response.status);
                 console.log('Data: ', response.data);
             })
             .catch(() => {
