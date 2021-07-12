@@ -6,4 +6,9 @@ export const LoginContainer = styled.div`
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top center;
+
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    flex-direction: column;
 `;

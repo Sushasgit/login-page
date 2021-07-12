@@ -1,24 +1,102 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-// import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import TextField from '../TextField';
 import Button from '../Button';
 
-export const FormContainer = styled.div``;
+export const FormContainer = styled.div`
+    width: 900px;
+    margin-left: 140px;
+    display: flex;
+    align-items: center;
+`;
 
-export const Info = styled.section``;
+export const Info = styled.section`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 65px;
+
+    & h1 {
+        color: #fff;
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 1.3;
+
+        & span {
+            display: block;
+            font-weight: 900;
+            font-size: 87px;
+        }
+    }
+`;
+
+export const StyledInputLabel = styled(InputLabel)`
+    font-size: 24px;
+    color: #fff;
+    font-weight: 900;
+
+    &.Mui-focused {
+        color: #fff;
+    }
+`;
+
+export const Form = styled.form`
+    max-width: 390px;
+    width: 100%;
+`;
+
+export const ForgotLink = styled(Link)`
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #fff;
+`;
+
+export const Actions = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    margin-top: 26px;
+    width: 100%;
+`;
 
 const useStyles = makeStyles((theme) => ({
     button: {
         margin: theme.spacing(1),
         borderRadius: '30px',
-        backgroundColor: theme.palette.green,
+        color: '#fff',
+        transition: 'opacity 0.1s linear',
     },
 }));
 
 const LoginForm = () => {
     const classes = useStyles();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const data = { email, password };
+        axios
+            .post('https://api.ozonin-staging.com/api/v1/users/login', data)
+            .then((response) => {
+                console.log('Status: ', response.status);
+                console.log('Data: ', response.data);
+            })
+            .catch(() => {
+                setError('Something went wrong');
+            });
+    };
+
     return (
         <FormContainer>
             <Info>
@@ -29,13 +107,59 @@ const LoginForm = () => {
 
                 <Button
                     variant="contained"
-                    color="default"
+                    color="#fff"
+                    bgColor="#27AE60"
                     className={classes.button}
                     startIcon={<SearchIcon />}
                 >
                     Search in the catalog
                 </Button>
             </Info>
+            <Form onSubmit={handleSubmit}>
+                <FormControl error={!!error} margin="normal" fullWidth className={classes.margin}>
+                    <StyledInputLabel shrink disableAnimation htmlFor="login">
+                        E-mail
+                    </StyledInputLabel>
+                    <TextField
+                        error={!!error}
+                        onChange={(e) => setEmail(e.target.value)}
+                        id="login"
+                    />
+                </FormControl>
+                <FormControl error={!!error} margin="normal" fullWidth className={classes.margin}>
+                    <StyledInputLabel shrink disableAnimation htmlFor="password">
+                        Password
+                    </StyledInputLabel>
+                    <TextField
+                        error={!!error}
+                        onChange={(e) => setPassword(e.target.value)}
+                        id="password"
+                    />
+                </FormControl>
+                <Actions>
+                    <div>
+                        <Button
+                            variant="contained"
+                            color="#fff"
+                            bgColor="#2979FF"
+                            className={classes.button}
+                            endIcon={<ArrowRightAltIcon />}
+                        >
+                            Register
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            className={classes.button}
+                            color="#fff"
+                            borderColor="#fff"
+                            type="submit"
+                        >
+                            Login
+                        </Button>
+                    </div>
+                    <ForgotLink to="/forgot-pass">Forgot pass?</ForgotLink>
+                </Actions>
+            </Form>
         </FormContainer>
     );
 };

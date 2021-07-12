@@ -7,7 +7,7 @@ export const StyledHeader = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 900px;
+    max-width: 770px;
     margin-left: 100px;
 `;
 

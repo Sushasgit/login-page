@@ -15,6 +15,9 @@ const useStyles = makeStyles(() =>
             body: {
                 margin: 0,
                 fontFamily: 'Roboto, sans-serif',
+                width: '100%',
+                height: '100%',
+                overflow: 'hidden',
             },
             '#root': {
                 height: '100%',

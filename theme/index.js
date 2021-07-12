@@ -5,11 +5,7 @@ export default createTheme({
         MuiButton: {
             root: {
                 fontWeight: 'bold',
-                backgroundColor: 'red',
                 margin: '10px',
-                '&:hover': {
-                    backgroundColor: 'green',
-                },
             },
         },
     },
