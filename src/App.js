@@ -6,6 +6,8 @@ import theme from '../theme';
 import GlobalStyles from '../theme/GlobalStyles';
 
 import Login from './pages/Login';
+import ForgotPassword from './pages/ForgotPassword';
+import SignUp from './pages/SignUp';
 
 const App = () => {
     return (
@@ -15,6 +17,8 @@ const App = () => {
                 <div className="app">
                     <Switch>
                         <Route exact path="/" component={Login} />
+                        <Route exact path="/forgot-password" component={ForgotPassword} />
+                        <Route exact path="/register" component={SignUp} />
                     </Switch>
                 </div>
             </Router>

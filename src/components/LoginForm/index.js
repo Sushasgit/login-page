@@ -28,7 +28,7 @@ export const Info = styled.section`
         color: #fff;
         font-size: 30px;
         font-weight: 700;
-        line-height: 1.3;
+        line-height: 1.2;
 
         & span {
             display: block;
@@ -123,6 +123,7 @@ const LoginForm = () => {
                         error={!!error}
                         onChange={(e) => setEmail(e.target.value)}
                         id="login"
+                        required
                     />
                 </FormControl>
                 <FormControl error={!!error} margin="normal" fullWidth className={classes.margin}>
@@ -134,6 +135,7 @@ const LoginForm = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         id="password"
                         type="password"
+                        required
                     />
                 </FormControl>
                 <Actions>
@@ -144,6 +146,8 @@ const LoginForm = () => {
                             bgColor="#2979FF"
                             className={classes.button}
                             endIcon={<ArrowRightAltIcon />}
+                            component={Link}
+                            to="/register"
                         >
                             Register
                         </Button>
@@ -157,7 +161,7 @@ const LoginForm = () => {
                             Login
                         </Button>
                     </div>
-                    <ForgotLink to="/forgot-pass">Forgot pass?</ForgotLink>
+                    <ForgotLink to="/forgot-password">Forgot pass?</ForgotLink>
                 </Actions>
             </Form>
         </FormContainer>
