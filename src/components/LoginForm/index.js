@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -59,6 +60,13 @@ export const ForgotLink = styled(Link)`
     color: #fff;
 `;
 
+export const Error = styled.p`
+    color: #ff0000;
+    margin: 0;
+    text-align: center;
+    font-weight: 900;
+`;
+
 export const Actions = styled.div`
     display: flex;
     align-items: center;
@@ -82,17 +90,27 @@ const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const data = { email, password };
+        const data = { user: { email, password } };
+
         axios
             .post('https://api.ozonin-staging.com/api/v1/users/login', data)
-            .then((response) => {
-                console.log('Data: ', response.data);
+            .then(() => {
+                history.push('/profile');
             })
-            .catch(() => {
-                setError('Something went wrong');
+            .catch((error) => {
+                if (
+                    error.response &&
+                    error.response.data &&
+                    error.response.data.errors &&
+                    error.response.data.errors.base
+                ) {
+                    const errorText = error.response.data.errors.base[0];
+                    setError(errorText);
+                }
             });
     };
 
@@ -137,6 +155,7 @@ const LoginForm = () => {
                         type="password"
                         required
                     />
+                    {error && <Error>{error}</Error>}
                 </FormControl>
                 <Actions>
                     <div>
